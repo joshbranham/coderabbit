@@ -19,7 +19,7 @@ reviews:
       - name: "Stable and Deterministic Test Names"
         mode: error
         instructions: |
-          Test names MUST be stable and deterministic. They must never contain dynamic
+          Ginkgo test names MUST be stable and deterministic. They must never contain dynamic
           information that changes between runs.
 
           Flag any test title (It(), Describe(), Context(), When(), etc.) that includes:
@@ -31,6 +31,10 @@ reviews:
           - IP addresses
           - Any value that could change between test runs
 
+          Additionally, flag overly-specific test titles likely to change in
+          later development iterations, to avoid the need to specify mappings
+          after changing the name.
+
           Test names should use descriptive, static strings that clearly indicate what
           the test validates.
 
@@ -38,18 +42,20 @@ reviews:
           - `It("should create pod test-pod-xyz123 with custom security context")`
           - `It(fmt.Sprintf("should run on node %s", nodeName))`
           - `It("should create namespace " + ns.Name)`
+          - `It("should complete initialization within 30s")`
 
           ✅ Good examples:
           - `It("should create a pod with custom security context")`
           - `It("should schedule workloads to labeled nodes")`
           - `It("should enforce network policy between namespaces")`
+          - `It("should complete initialization quickly")`
 
           Dynamic values belong in test BODIES (assertions, setup), never in test TITLES.
 
       - name: "Test Structure and Quality"
         mode: warning
         instructions: |
-          Review test code for these quality requirements:
+          Review Ginkgo test code for these quality requirements:
 
           1. **Single responsibility**: Each test (It block) should test one specific behavior.
              Flag tests that assert multiple unrelated behaviors.
